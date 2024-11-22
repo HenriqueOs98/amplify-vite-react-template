@@ -1,50 +1,40 @@
-import { useEffect, useState } from "react";
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import type { Schema } from "../amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
-
-const client = generateClient<Schema>();
+import { CodeEditor } from './components/CodeEditor';
 
 function App() {
-
   const { user, signOut } = useAuthenticator();
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-
-  useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-  }, []);
-
-  
-  function deleteTodo(id: string) {
-    client.models.Todo.delete({ id })
-  }
-
-  function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
-  }
 
   return (
-    <main>
-      <h1>{user?.signInDetails?.loginId}'s todos</h1>
-
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map(todo => <li
-          onClick={() => deleteTodo(todo.id)}
-          key={todo.id}>
-          {todo.content}
-        </li>)}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
+    <main className="min-h-screen bg-gray-900 text-white p-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">Code Editor</h1>
+          <button 
+            onClick={signOut}
+            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 
+                       transition-colors duration-200"
+          >
+            Sign out
+          </button>
+        </div>
+        
+        <div className="space-y-8">
+          <section>
+            <h2 className="text-xl font-semibold mb-4">JavaScript</h2>
+            <CodeEditor language="javascript" userId={user?.username || ''} />
+          </section>
+          
+          <section>
+            <h2 className="text-xl font-semibold mb-4">HTML</h2>
+            <CodeEditor language="html" userId={user?.username || ''} />
+          </section>
+          
+          <section>
+            <h2 className="text-xl font-semibold mb-4">CSS</h2>
+            <CodeEditor language="css" userId={user?.username || ''} />
+          </section>
+        </div>
       </div>
-      <button onClick={signOut}>Sign out</button>
     </main>
   );
 }
