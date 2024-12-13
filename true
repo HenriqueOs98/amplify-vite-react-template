@@ -1,0 +1,40 @@
+import PocketBase from 'pocketbase';
+import { Post, Comment, Like, Connection, Profile } from './types';
+
+const pb = new PocketBase('https://coding-platform-js.pockethost.io/');
+
+// ... (keep existing functions)
+
+export async function searchPosts(query: string, page: number = 1, perPage: number = 20): Promise<{
+  items: Post[];
+  totalItems: number;
+  totalPages: number;
+}> {
+  try {
+    const resultList = await pb.collection("posts").getList(page, perPage, {
+      filter: `content ~ "${query}" || author.username ~ "${query}"`,
+      sort: '-created',
+      expand: 'author',
+    });
+
+    const posts: Post[] = resultList.items.map((item: any) => ({
+      id: item.id,
+      author: item.expand.author.username,
+      content: item.content,
+      createdAt: new Date(item.created),
+      visibility: item.visibility,
+      likes_count: item.likes_count,
+      comments_count: item.comments_count,
+    }));
+
+    return {
+      items: posts,
+      totalItems: resultList.totalItems,
+      totalPages: resultList.totalPages,
+    };
+  } catch (error) {
+    console.error('Error searching posts:', error);
+    throw error;
+  }
+}
+

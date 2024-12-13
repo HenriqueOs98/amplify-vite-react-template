@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 280 50% 5%;
+    --foreground: 280 100% 90%;
+    --card: 280 50% 8%;
+    --card-foreground: 280 100% 90%;
+    --popover: 280 50% 8%;
+    --popover-foreground: 280 100% 90%;
+    --primary: 280 100% 60%;
+    --primary-foreground: 280 100% 98%;
+    --secondary: 280 100% 70%;
+    --secondary-foreground: 280 50% 5%;
+    --muted: 280 50% 15%;
+    --muted-foreground: 280 100% 70%;
+    --accent: 280 100% 80%;
+    --accent-foreground: 280 100% 98%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 280 100% 98%;
+    --border: 280 50% 30%;
+    --input: 280 50% 20%;
+    --ring: 280 100% 60%;
+    --radius: 0.5rem;
+  }
+
+  .light {
+    --background: 280 30% 96%;
+    --foreground: 280 50% 10%;
+    --card: 280 30% 98%;
+    --card-foreground: 280 50% 10%;
+    --popover: 280 30% 98%;
+    --popover-foreground: 280 50% 10%;
+    --primary: 280 100% 50%;
+    --primary-foreground: 280 100% 98%;
+    --secondary: 280 100% 60%;
+    --secondary-foreground: 280 30% 98%;
+    --muted: 280 30% 93%;
+    --muted-foreground: 280 50% 40%;
+    --accent: 280 100% 70%;
+    --accent-foreground: 280 50% 10%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 280 100% 98%;
+    --border: 280 30% 85%;
+    --input: 280 30% 90%;
+    --ring: 280 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image: radial-gradient(circle at center, 
+      rgba(147, 51, 234, 0.1) 0%, 
+      rgba(147, 51, 234, 0.05) 25%, 
+      rgba(147, 51, 234, 0.025) 50%, 
+      transparent 100%
+    );
+  }
+}
+
+.cyberpunk-border {
+  position: relative;
+  border: 2px solid hsl(var(--primary));
+  box-shadow: 
+    0 0 10px hsl(var(--primary) / 0.5),
+    0 0 20px hsl(var(--primary) / 0.3),
+    0 0 30px hsl(var(--primary) / 0.1),
+    inset 0 0 10px hsl(var(--primary) / 0.2);
+  overflow: hidden;
+}
+
+.cyberpunk-glow {
+  text-shadow: 
+    0 0 5px hsl(var(--primary)),
+    0 0 10px hsl(var(--primary) / 0.8),
+    0 0 15px hsl(var(--primary) / 0.6),
+    0 0 20px hsl(var(--primary) / 0.4);
+}
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-roboto-mono {
+  font-family: var(--font-roboto-mono);
+}
+
+.font-source-sans-pro {
+  font-family: var(--font-source-sans-pro);
+}
+
+.font-orbitron {
+  font-family: var(--font-orbitron);
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 4px;
+  box-shadow: 
+    0 0 5px hsl(var(--primary) / 0.5),
+    inset 0 0 5px hsl(var(--primary) / 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
+}
+
+/* Code editor styles */
+textarea {
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+/* Ensure proper height calculations */
+html, body {
+  height: 100%;
+}
+
+main {
+  min-height: calc(100vh - 3rem);
+  padding-top: 0.5rem;
+}
+
